@@ -81,7 +81,7 @@ fun AppNavigation() {
                 produits = produits,
                 onProduitClick = { produitId ->
                     // TODO 2 : naviguer vers le détail du produit cliqué.
-                    // Une ligne :  navController.navigate("detail/$produitId")
+                   navController.navigate("detail/$produitId")
                 }
             )
         }
@@ -102,6 +102,19 @@ fun AppNavigation() {
         //           )
         //       }
         //   }
+        composable("detail/{produitId}"){ backStackEntry->
+            val id = backStackEntry.arguments?.getString("produitId")?.toIntOrNull()
+            val produit = produits.find { it.id==id }
+            if(produit!=null){
+                EcranDetail(
+                    produit=produit ,
+                    onRetour = {
+                        navController.popBackStack()
+                    }
+                )
+            }
+
+        }
     }
 }
 
